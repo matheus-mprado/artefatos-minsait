@@ -20,10 +20,11 @@ export function ListTechBar({
             cursor="pointer"
           >
             <Tooltip label={item.ext}>
-              <img src={`/logos/${item.imagePath}`} />
-              {/* <Text color={item.name === selectedTech ? "#fafafa" : "#7d7d7d"}>
-                {item.name}
-              </Text> */}
+              <Image
+                h="28px"
+                src={`/logos/${item.imagePath}`}
+                opacity={item.name === selectedTech ? "1" : "0.3"}
+              />
             </Tooltip>
           </Flex>
         );
