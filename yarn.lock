@@ -1940,6 +1940,11 @@ use-sidecar@^1.1.2:
     detect-node-es "^1.1.0"
     tslib "^2.0.0"
 
+vite-plugin-radar@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-radar/-/vite-plugin-radar-0.7.0.tgz#87bacd584a019142d95773e1194825159ac3f78f"
+  integrity sha512-lTpCJ56GDVzNq41SU+6AZExUFP/yZauwpfEqyatw/ZayYYM7bEFq4KWN3+/Hjwxfe5nCIjIpE594XE1jtjjz2A==
+
 vite@^4.2.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/vite/-/vite-4.2.1.tgz#6c2eb337b0dfd80a9ded5922163b94949d7fc254"
