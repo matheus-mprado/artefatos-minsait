@@ -1,8 +1,9 @@
 {
   "name": "artefatos-minsait",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": "Maximiliano do Prado, Matheus",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

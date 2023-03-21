@@ -3,6 +3,7 @@ import "./style/global.css";
 import {
   Button,
   Flex,
+  Input,
   Text,
   Textarea,
   useDisclosure,
@@ -22,7 +23,8 @@ interface ArtifactsProps {
 function App() {
   const [text, setText] = useState("");
   const [tech, setTech] = useState("java");
-  const [regexTech, setRegexTech] = useState<RegExp | string>("");
+  const [project, setProject] = useState("");
+  const [regexTech, setRegexTech] = useState<RegExp | string>(/\.java/g);
   const [artifacts, setArtifacts] = useState<ArtifactsProps>(
     {} as ArtifactsProps
   );
@@ -39,7 +41,7 @@ function App() {
       case "html":
         setRegexTech(RegExp(/\.html/g));
         break;
-      case "react":
+      case "typescript":
         setRegexTech(RegExp(/\.tsx?/g));
         break;
       case "javascript":
@@ -60,6 +62,16 @@ function App() {
   }
 
   function handleGenerateArtefacts() {
+    if (!project) {
+      toast({
+        title: "Nome do projeto inválido",
+        description: "Preencha o nome do projeto",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
     let aux = "";
 
     var sanitized = text
@@ -87,11 +99,11 @@ function App() {
 
     let modified = sanitized
       .filter((item) => item[0] === "M")
-      .map((item) => item.slice(1));
+      .map((item) => project + "/" + item.slice(1));
 
     let added = sanitized
       .filter((item) => item[0] === "A")
-      .map((item) => item.slice(1));
+      .map((item) => project + "/" + item.slice(1));
 
     const artifactsData = {
       added,
@@ -145,18 +157,29 @@ function App() {
             })}
           </Flex>
 
-          <Textarea
-            bg="#0a0915"
-            mb="2rem"
-            border="none"
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Preencha com seu git log"
-            color="#e6e6e6"
-            py="0.75rem"
-            fontSize="0.875rem"
-            h="100%"
-            resize="none"
-          ></Textarea>
+          <Flex mb="2rem" h="100%" w="100%" flexDir="column" align="flex-start">
+            <Input
+              mb="1rem"
+              placeholder="Nome do Projeto"
+              fontSize="0.875rem"
+              border="none"
+              bg="#0a0915"
+              color="#e6e6e6"
+              onChange={(e) => setProject(e.target.value)}
+              value={project}
+            />
+            <Textarea
+              bg="#0a0915"
+              border="none"
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Preencha com seu git log"
+              color="#e6e6e6"
+              py="0.75rem"
+              fontSize="0.875rem"
+              h="100%"
+              resize="none"
+            ></Textarea>
+          </Flex>
           <Button
             bg="#06BA83"
             px="3rem"
@@ -172,7 +195,7 @@ function App() {
         </Flex>
         <Flex
           w={["100%", "50%"]}
-          mt={["2rem","0"]}
+          mt={["2rem", "0"]}
           h="100%"
           maxH="30rem"
           flexDir="column"
@@ -194,7 +217,7 @@ function App() {
               </Flex>
               {artifacts.added.map((item) => {
                 return (
-                  <Text fontSize="0.875rem" color="#7d7d7d">
+                  <Text key={item} fontSize="0.875rem" color="#7d7d7d">
                     {item}
                   </Text>
                 );
@@ -219,7 +242,7 @@ function App() {
               </Flex>
               {artifacts.modified.map((item) => {
                 return (
-                  <Text fontSize="0.875rem" color="#7d7d7d">
+                  <Text key={item} fontSize="0.875rem" color="#7d7d7d">
                     {item}
                   </Text>
                 );
