@@ -6,6 +6,7 @@ import {
   Input,
   Text,
   Textarea,
+  Tooltip,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -48,7 +49,7 @@ function App() {
         setRegexTech(RegExp(/\.jsx?/g));
         break;
       case "css":
-        setRegexTech(RegExp(/\.css/g));
+        setRegexTech(RegExp(/\.(css|scss|sass)\b/g));
         break;
       case "test":
         setRegexTech(RegExp(/\.(test|spec)/g));
@@ -145,13 +146,15 @@ function App() {
             {listTechs.map((item) => {
               return (
                 <Flex
-                  key={item}
-                  onClick={() => handleSelectTech(item)}
+                  key={item.name}
+                  onClick={() => handleSelectTech(item.name)}
                   cursor="pointer"
                 >
-                  <Text color={item === tech ? "#fafafa" : "#7d7d7d"}>
-                    {item}
-                  </Text>
+                  <Tooltip label={item.ext}>
+                    <Text color={item.name === tech ? "#fafafa" : "#7d7d7d"}>
+                      {item.name}
+                    </Text>
+                  </Tooltip>
                 </Flex>
               );
             })}
