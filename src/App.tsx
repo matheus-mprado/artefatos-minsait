@@ -14,7 +14,8 @@ import { useState } from "react";
 import { MdOutlineContentCopy } from "react-icons/md";
 
 import { listTechs } from "./utils/listTechs";
-import { ModalGitConfig } from "./components/ModalGitConfig";
+import { ModalGitConfig } from "./components/modals/ModalGitConfig";
+import { ListTechBar } from "./components/core/ListTechBar";
 
 interface ArtifactsProps {
   added: string[];
@@ -142,23 +143,10 @@ function App() {
       </Flex>
       <Flex h="100%" flexDir={["column", "row"]}>
         <Flex flexDir="column" w={["100%", "50%"]} mr="1rem" align="flex-start">
-          <Flex flexDir="row" gap="1.25rem" mb="2rem">
-            {listTechs.map((item) => {
-              return (
-                <Flex
-                  key={item.name}
-                  onClick={() => handleSelectTech(item.name)}
-                  cursor="pointer"
-                >
-                  <Tooltip label={item.ext}>
-                    <Text color={item.name === tech ? "#fafafa" : "#7d7d7d"}>
-                      {item.name}
-                    </Text>
-                  </Tooltip>
-                </Flex>
-              );
-            })}
-          </Flex>
+          <ListTechBar
+            handleSelectTech={handleSelectTech}
+            selectedTech={tech}
+          />
 
           <Flex mb="2rem" h="100%" w="100%" flexDir="column" align="flex-start">
             <Input
