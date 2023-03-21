@@ -74,6 +74,17 @@ function App() {
       });
     }
 
+    if (!text) {
+      toast({
+        title: "Hash do projeto inválido",
+        description: "Preencha o git log",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
+
     let aux = "";
 
     var sanitized = text
