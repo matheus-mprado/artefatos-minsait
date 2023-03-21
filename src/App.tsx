@@ -24,9 +24,9 @@ interface ArtifactsProps {
 
 function App() {
   const [text, setText] = useState("");
-  const [tech, setTech] = useState("java");
+  const [tech, setTech] = useState("typescript");
   const [project, setProject] = useState("");
-  const [regexTech, setRegexTech] = useState<RegExp | string>(/\.java/g);
+  const [regexTech, setRegexTech] = useState<RegExp | string>(/\.jsx?/g);
   const [artifacts, setArtifacts] = useState<ArtifactsProps>(
     {} as ArtifactsProps
   );
