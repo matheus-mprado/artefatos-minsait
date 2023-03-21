@@ -127,8 +127,8 @@ function App() {
           Git Log
         </Text>
       </Flex>
-      <Flex h="100%">
-        <Flex flexDir="column" w="50%" mr="1rem" align="flex-start">
+      <Flex h="100%" flexDir={["column", "row"]}>
+        <Flex flexDir="column" w={["100%", "50%"]} mr="1rem" align="flex-start">
           <Flex flexDir="row" gap="1.25rem" mb="2rem">
             {listTechs.map((item) => {
               return (
@@ -171,7 +171,8 @@ function App() {
           </Button>
         </Flex>
         <Flex
-          w="50%"
+          w={["100%", "50%"]}
+          mt={["2rem","0"]}
           h="100%"
           maxH="30rem"
           flexDir="column"
