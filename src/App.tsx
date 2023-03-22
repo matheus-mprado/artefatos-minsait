@@ -133,7 +133,7 @@ function App() {
     navigator.clipboard.writeText(artfacts.join(" "));
     toast({
       title: "Artefato Copiado",
-      description: "Artefatos em sua área de transferencia",
+      description: "Artefatos em sua área de transferência",
       status: "success",
       duration: 9000,
       isClosable: true,
@@ -159,7 +159,7 @@ function App() {
     navigator.clipboard.writeText(gitLog);
     toast({
       title: "Git log Gerado",
-      description: "Git log copiado para sua área de transferencia",
+      description: "Git log copiado para sua área de transferência",
       status: "success",
       duration: 9000,
       isClosable: true,
