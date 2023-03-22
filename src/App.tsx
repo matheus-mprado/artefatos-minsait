@@ -10,12 +10,14 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlineContentCopy } from "react-icons/md";
+import { HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
 
 import { listTechs } from "./utils/listTechs";
 import { ModalGitConfig } from "./components/modals/ModalGitConfig";
 import { ListTechBar } from "./components/core/ListTechBar";
+import { format } from "date-fns";
 
 interface ArtifactsProps {
   added: string[];
@@ -25,6 +27,8 @@ interface ArtifactsProps {
 function App() {
   const [text, setText] = useState("");
   const [tech, setTech] = useState("typescript");
+  const [chaveC, setChaveC] = useState("");
+  const [dateLog, setDateLog] = useState("");
   const [project, setProject] = useState("");
   const [regexTech, setRegexTech] = useState<RegExp | string>(/\.jsx?/g);
   const [artifacts, setArtifacts] = useState<ArtifactsProps>(
@@ -84,7 +88,6 @@ function App() {
       });
     }
 
-
     let aux = "";
 
     var sanitized = text
@@ -137,20 +140,88 @@ function App() {
     });
   }
 
+  function handleGenerateGitLog() {
+    if (!dateLog || !chaveC) {
+      toast({
+        title: "Erro ao gerar Log",
+        description: "Preencha os campos obrigatórios",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
+    localStorage.setItem("@genAtf:chaveC", chaveC);
+
+    const dateFormatted = format(new Date(dateLog), "yyyy-MM-dd");
+    const gitLog = `git log --name-status --author=${chaveC} --after="${dateFormatted}" --pretty=format:'commit: #%h' > hashOF.txt`;
+
+    navigator.clipboard.writeText(gitLog);
+    toast({
+      title: "Git log Gerado",
+      description: "Git log copiado para sua área de transferencia",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+  }
+
+  useEffect(() => {
+    const storagedChaveC = localStorage.getItem("@genAtf:chaveC");
+    if (storagedChaveC !== null) {
+      setChaveC(storagedChaveC);
+    }
+  }, []);
+
   return (
     <Flex flexDir="column" px="2rem" py="2rem" bg="#05040E" h="100vh" w="100%">
-      <Flex mb="1.5rem" gap="2rem" align="baseline">
-        <Text color="#fafafa" fontWeight={600} fontSize="1.75rem">
-          GenAtf
-        </Text>
-        <Text
-          color="#e6e6e6"
-          fontSize="0.875rem"
-          cursor="pointer"
-          onClick={onOpen}
-        >
-          Git Log
-        </Text>
+      <Flex mb="1.5rem" align="center" justify="space-between">
+        <Flex gap="2rem" align="baseline">
+          <Text color="#fafafa" fontWeight={600} fontSize="1.75rem">
+            GenAtf
+          </Text>
+          <Text
+            color="#e6e6e6"
+            fontSize="0.875rem"
+            cursor="pointer"
+            onClick={onOpen}
+          >
+            Git Config
+          </Text>
+        </Flex>
+        <Flex flexDir="column">
+          <Text fontSize="0.625rem" color="#fafafa" mb="0.35rem">Gerar git log</Text>
+          <Flex align="center" gap="0.5rem">
+            <Input
+              w="8rem"
+              placeholder="Chave C"
+              fontSize="0.875rem"
+              border="none"
+              bg="#0a0915"
+              color="#e6e6e6"
+              value={chaveC}
+              onChange={(e) => setChaveC(e.target.value)}
+            />
+            <Input
+              w="10rem"
+              type="date"
+              fontSize="0.875rem"
+              border="none"
+              bg="#0a0915"
+              color="#e6e6e6"
+              value={dateLog}
+              onChange={(e) => setDateLog(e.target.value)}
+            />
+            <Tooltip label="Gerar Git Log" placement="auto">
+              <HiOutlineClipboardDocumentCheck
+                cursor="pointer"
+                color="#fafafa"
+                onClick={handleGenerateGitLog}
+                size="1.25rem"
+              />
+            </Tooltip>
+          </Flex>
+        </Flex>
       </Flex>
       <Flex h="100%" flexDir={["column", "row"]}>
         <Flex flexDir="column" w={["100%", "50%"]} mr="1rem" align="flex-start">
