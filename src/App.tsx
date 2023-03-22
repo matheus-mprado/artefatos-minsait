@@ -189,7 +189,7 @@ function App() {
             Git Config
           </Text>
         </Flex>
-        <Flex flexDir="column">
+        <Flex flexDir="column" display={["none","flex"]}>
           <Text fontSize="0.625rem" color="#fafafa" mb="0.35rem">Gerar git log</Text>
           <Flex align="center" gap="0.5rem">
             <Input
